@@ -14,12 +14,14 @@ export class HomeComponent implements OnInit {
     beginnerCourses: Course[];
     advancedCourses: Course[];
 
-    constructor(private http: HttpClient, private dialog: MatDialog) {
+    constructor(
+        private http: HttpClient,
+        private dialog: MatDialog,
+    ) {
 
     }
 
     ngOnInit() {
-
         this.http.get('/api/courses').subscribe(res => {
             const courses: Course[] = res['payload'].sort(sortCoursesBySeqNo);
             this.beginnerCourses = courses.filter(course => course.category == 'BEGINNER');

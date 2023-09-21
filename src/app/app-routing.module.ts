@@ -9,28 +9,27 @@ import { SearchLessonsComponent } from './search-lessons/search-lessons.componen
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
-
+        component: HomeComponent,
     },
     {
         path: 'search-lessons',
-        component: SearchLessonsComponent
+        component: SearchLessonsComponent,
     },
     {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
     },
     {
         path: 'courses/:courseId',
-        component: CourseComponent
+        component: CourseComponent,
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
     },
     {
         path: '**',
-        redirectTo: '/'
+        redirectTo: '/',
     },
 ];
 
