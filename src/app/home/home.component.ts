@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Course, sortCoursesBySeqNo } from '../model/course';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
+import { CoursesService } from '../services/courses.service';
 
 @Component({
     selector: 'home',
@@ -15,15 +15,15 @@ export class HomeComponent implements OnInit {
     advancedCourses: Course[];
 
     constructor(
-        private http: HttpClient,
+        private coursesService: CoursesService,
         private dialog: MatDialog,
     ) {
 
     }
 
     ngOnInit() {
-        this.http.get('/api/courses').subscribe(res => {
-            const courses: Course[] = res['payload'].sort(sortCoursesBySeqNo);
+        this.coursesService.loadAllCourses().subscribe(res => {
+            const courses: Course[] = res.sort(sortCoursesBySeqNo);
             this.beginnerCourses = courses.filter(course => course.category == 'BEGINNER');
             this.advancedCourses = courses.filter(course => course.category == 'ADVANCED');
         });

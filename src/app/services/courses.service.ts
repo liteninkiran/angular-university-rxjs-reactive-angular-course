@@ -15,4 +15,9 @@ export class CoursesService {
 
     }
 
+    public loadAllCourses(): Observable<Course[]> {
+        return this.http.get<Course[]>('/api/courses').pipe(
+            map((res) => res['payload'])
+        );
+    }
 }
