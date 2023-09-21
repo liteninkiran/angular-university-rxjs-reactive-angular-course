@@ -3,6 +3,8 @@ import { Course, sortCoursesBySeqNo } from '../model/course';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 import { CoursesService } from '../services/courses.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'home',
@@ -11,8 +13,8 @@ import { CoursesService } from '../services/courses.service';
 })
 export class HomeComponent implements OnInit {
 
-    beginnerCourses: Course[];
-    advancedCourses: Course[];
+    public beginnerCourses$: Observable<Course[]>;
+    public advancedCourses$: Observable<Course[]>;
 
     constructor(
         private coursesService: CoursesService,
@@ -21,15 +23,19 @@ export class HomeComponent implements OnInit {
 
     }
 
-    ngOnInit() {
-        this.coursesService.loadAllCourses().subscribe(res => {
-            const courses: Course[] = res.sort(sortCoursesBySeqNo);
-            this.beginnerCourses = courses.filter(course => course.category == 'BEGINNER');
-            this.advancedCourses = courses.filter(course => course.category == 'ADVANCED');
-        });
+    public ngOnInit(): void {
+        const courses$: Observable<Course[]> = this.coursesService.loadAllCourses().pipe(
+            map((courses: Course[]) => courses.sort(sortCoursesBySeqNo))
+        );
+        this.beginnerCourses$ = courses$.pipe(
+            map((courses: Course[]) => courses.filter((course: Course) => course.category === 'BEGINNER'))
+        );
+        this.advancedCourses$ = courses$.pipe(
+            map((courses: Course[]) => courses.filter((course: Course) => course.category === 'ADVANCED'))
+        );
     }
 
-    editCourse(course: Course) {
+    public editCourse(course: Course): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
