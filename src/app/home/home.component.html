@@ -6,76 +6,12 @@
 
         <!-- Beginner Course -->
         <mat-tab label="Beginners">
-
-            <mat-card *ngFor="let course of (beginnerCourses$ | async)" class="course-card mat-elevation-z10">
-
-                <!-- Header -->
-                <mat-card-header>
-                    <mat-card-title>{{ course.description }}</mat-card-title>
-                </mat-card-header>
-
-                <!-- Image -->
-                <img mat-card-image [src]="course.iconUrl">
-
-                <!-- Content -->
-                <mat-card-content>
-                    <p>{{ course.longDescription }}</p>
-                </mat-card-content>
-
-                <!-- Actions ( View / Edit ) -->
-                <mat-card-actions class="course-actions">
-
-                    <!-- View Course -->
-                    <button mat-button mat-raised-button color="primary" [routerLink]="['/courses', course.id]">
-                        VIEW COURSE
-                    </button>
-
-                    <!-- Edit Course -->
-                    <button mat-button mat-raised-button color="accent" (click)="editCourse(course)">
-                        EDIT
-                    </button>
-
-                </mat-card-actions>
-
-            </mat-card>
-
+            <courses-card-list [courses]="beginnerCourses$ | async"></courses-card-list>
         </mat-tab>
 
         <!-- Advanced Course -->
         <mat-tab label="Advanced">
-
-            <mat-card *ngFor="let course of (advancedCourses$ | async)" class="course-card mat-elevation-z10">
-
-                <!-- Header -->
-                <mat-card-header>
-                    <mat-card-title>{{ course.description }}</mat-card-title>
-                </mat-card-header>
-
-                <!-- Image -->
-                <img mat-card-image [src]="course.iconUrl">
-
-                <!-- Content -->
-                <mat-card-content>
-                    <p>{{ course.longDescription }}</p>
-                </mat-card-content>
-
-                <!-- Actions ( View / Edit ) -->
-                <mat-card-actions class="course-actions">
-
-                    <!-- View Course -->
-                    <button mat-button class="mat-raised-button mat-primary" [routerLink]="['/courses', course.id]">
-                        VIEW COURSE
-                    </button>
-
-                    <!-- Edit Course -->
-                    <button mat-button class="mat-raised-button mat-accent" (click)="editCourse(course)">
-                        EDIT
-                    </button>
-
-                </mat-card-actions>
-
-            </mat-card>
-
+            <courses-card-list [courses]="advancedCourses$ | async"></courses-card-list>
         </mat-tab>
 
     </mat-tab-group>
