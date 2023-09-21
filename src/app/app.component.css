@@ -1,5 +1,4 @@
-
->>> body {
+body {
     margin: 0;
 }
 
@@ -8,18 +7,18 @@ main {
 }
 
 .user-avatar {
-  max-height: 35px;
-  border-radius: 4px;
+    max-height: 35px;
+    border-radius: 4px;
 
 }
 
 .toolbar-tools {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 
 .filler {
-  flex: 1 1 auto;
-  width: 100%;
+    flex: 1 1 auto;
+    width: 100%;
 }
