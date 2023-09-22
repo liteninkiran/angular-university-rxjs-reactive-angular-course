@@ -19,6 +19,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { SearchLessonsComponent } from './search-lessons/search-lessons.component';
 
 import { SafeUrlPipe } from './common/safe-url.pipe';
+import { LoadingService } from './loading/loading.service';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { SafeUrlPipe } from './common/safe-url.pipe';
         ReactiveFormsModule,
     ],
     providers: [
+        LoadingService,
     ],
     bootstrap: [
         AppComponent,

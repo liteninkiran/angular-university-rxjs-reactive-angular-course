@@ -1,32 +1,40 @@
 <mat-sidenav-container fullscreen>
 
     <mat-sidenav #start (click)="start.close()">
+
         <mat-nav-list>
 
+            <!-- Course -->
             <a mat-list-item routerLink="/">
                 <mat-icon>library_books</mat-icon>
                 <span>Courses</span>
             </a>
 
+            <!-- Search Lessons -->
             <a mat-list-item routerLink="/search-lessons">
                 <mat-icon>search</mat-icon>
                 <span>Search Lessons</span>
             </a>
 
+            <!-- About -->
             <a mat-list-item routerLink="about">
                 <mat-icon>question_answer</mat-icon>
                 <span>About</span>
             </a>
+
+            <!-- Register -->
             <a mat-list-item>
                 <mat-icon>person_add</mat-icon>
                 <span>Register</span>
             </a>
 
+            <!-- Login -->
             <a mat-list-item routerLink="login">
                 <mat-icon>account_circle</mat-icon>
                 <span>Login</span>
             </a>
 
+            <!-- Logout -->
             <a mat-list-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
@@ -36,21 +44,30 @@
 
     </mat-sidenav>
 
+    <!-- Horizontal Toolbar (Top) -->
     <mat-toolbar color="primary">
 
+        <!-- Container -->
         <div class="toolbar-tools">
 
+            <!-- Burger Menu -->
             <button mat-icon-button (click)="start.open('mouse')">
                 <mat-icon>menu</mat-icon>
             </button>
 
-            <div class="filler"></div>
+            <!-- Empty Space -->
+            <div class="filler">
+
+            </div>
 
         </div>
 
-
     </mat-toolbar>
 
+    <!-- Loading Spinner -->
+    <loading></loading>
+
+    <!-- Main Content -->
     <router-outlet></router-outlet>
 
 </mat-sidenav-container>

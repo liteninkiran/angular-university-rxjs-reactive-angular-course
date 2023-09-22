@@ -3,6 +3,7 @@ import { Course, sortCoursesBySeqNo } from '../model/course';
 import { CoursesService } from '../services/courses.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
     selector: 'home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private coursesService: CoursesService,
+        private loadingService: LoadingService,
     ) {
 
     }
