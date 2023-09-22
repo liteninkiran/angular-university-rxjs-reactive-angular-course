@@ -20,6 +20,7 @@ import { SearchLessonsComponent } from './search-lessons/search-lessons.componen
 
 import { SafeUrlPipe } from './common/safe-url.pipe';
 import { LoadingService } from './loading/loading.service';
+import { MessageService } from './messages/messages.service';
 
 @NgModule({
     declarations: [
@@ -47,6 +48,7 @@ import { LoadingService } from './loading/loading.service';
     ],
     providers: [
         LoadingService,
+        MessageService,
     ],
     bootstrap: [
         AppComponent,
