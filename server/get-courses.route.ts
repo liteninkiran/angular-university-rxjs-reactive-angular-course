@@ -3,7 +3,7 @@ import { COURSES } from './db-data';
 
 export function getAllCourses(req: Request, res: Response) {
 
-    const throwError = true;
+    const throwError = false;
 
     if (throwError) {
         console.log('ERROR loading courses!');
