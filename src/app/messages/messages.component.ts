@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'messages',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessagesComponent implements OnInit {
 
+    public showMessages = false;
+    public errors$: Observable<string[]>;
+  
     constructor() {
 
     }
@@ -16,6 +20,6 @@ export class MessagesComponent implements OnInit {
     }
 
     public onClose(): void {
-
+        this.showMessages = false;
     }
 }
