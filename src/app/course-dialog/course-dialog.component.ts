@@ -1,9 +1,9 @@
 import { OnInit, AfterViewInit, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Course } from '../model/course';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CoursesService } from '../services/courses.service';
 import { LoadingService } from '../loading/loading.service';
+import { Course } from '../model/course';
 import * as moment from 'moment';
 
 @Component({
@@ -42,7 +42,8 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
     public save(): void {
         const changes = this.form.value;
-        this.coursesService.saveCourse(this.course.id, changes).subscribe((res) => {
+        const saveCourse$ = this.coursesService.saveCourse(this.course.id, changes);
+        this.loadingService.showLoaderUntilCompleted(saveCourse$).subscribe((res) => {
             this.dialogRef.close(res);
         });
     }
