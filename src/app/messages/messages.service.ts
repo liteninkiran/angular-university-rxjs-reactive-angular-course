@@ -5,7 +5,13 @@ import { filter } from 'rxjs/operators';
 @Injectable()
 export class MessageService {
 
-    public showErrors(...errors: string[]) {
+    private subject = new BehaviorSubject<string[]>([]);
 
+    public errors$: Observable<string[]> = this.subject
+        .asObservable()
+        .pipe(filter(messages => messages && messages.length > 0));
+
+    public showErrors(...errors: string[]) {
+        this.subject.next(errors);
     }
 }

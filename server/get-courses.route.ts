@@ -7,7 +7,7 @@ export function getAllCourses(req: Request, res: Response) {
 
     if (throwError) {
         console.log('ERROR loading courses!');
-        res.status(500).json({ message: 'random error occurred.' });
+        res.status(500).json({ message: 'A random error occurred' });
         return;
     }
 

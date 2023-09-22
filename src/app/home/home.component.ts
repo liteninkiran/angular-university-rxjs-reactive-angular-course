@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoadingService } from '../loading/loading.service';
 import { MessageService } from '../messages/messages.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'home',
@@ -31,10 +32,9 @@ export class HomeComponent implements OnInit {
     public reloadCourses(): void {
         const courses$: Observable<Course[]> = this.coursesService.loadAllCourses().pipe(
             map((courses: Course[]) => courses.sort(sortCoursesBySeqNo)),
-            catchError((err: any) => {
-                const message = 'Could not load courses... ' + JSON.stringify(err);
+            catchError((err: HttpErrorResponse) => {
+                const message = `Could not load courses (${ err.error.message })`;
                 this.messageService.showErrors(message);
-                console.log(message, err);
                 return throwError(err);
             })
         );
