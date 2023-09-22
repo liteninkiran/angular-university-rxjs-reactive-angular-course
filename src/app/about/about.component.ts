@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-    ngOnInit() {
+    public ngOnInit(): void {
 
     }
 
-    run() {
+    public run(): void {
 
     }
 }

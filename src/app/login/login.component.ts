@@ -5,28 +5,27 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
 
-    form: FormGroup;
+    public form: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private router: Router) {
-
+        private router: Router
+    ) {
         this.form = fb.group({
             email: ['test@angular-university.io', [Validators.required]],
             password: ['test', [Validators.required]]
         });
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
 
     }
 
-    login() {
+    public login(): void {
         const val = this.form.value;
     }
-
 }

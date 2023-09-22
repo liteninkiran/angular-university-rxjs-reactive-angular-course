@@ -11,12 +11,11 @@ export class MessagesComponent implements OnInit {
 
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
 
     }
 
-    onClose() {
+    public onClose(): void {
 
     }
-
 }
