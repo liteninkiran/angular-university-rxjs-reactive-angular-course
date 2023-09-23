@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Course, CourseResponse, sortCoursesBySeqNo } from '../model/course';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../loading/loading.service';
 import { MessageService } from '../messages/messages.service';
@@ -30,6 +30,10 @@ export class CoursesStore {
         ));
     }
 
+    public saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {
+        return undefined;
+    }
+
     private loadAllCourses(): void {
         const errFunction = (err: any) => {
             const message = 'Could not load courses';
@@ -41,7 +45,7 @@ export class CoursesStore {
             .get<CourseResponse>('/api/courses')
             .pipe(
                 map((res: CourseResponse) => res.payload),
-                catchError(err => errFunction(err)),
+                catchError(errFunction),
                 tap(courses => this.subject.next(courses)),
             );
 

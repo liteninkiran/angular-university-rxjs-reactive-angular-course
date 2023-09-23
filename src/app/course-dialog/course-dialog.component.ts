@@ -1,12 +1,11 @@
 import { OnInit, AfterViewInit, Component, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CoursesService } from '../services/courses.service';
-import { LoadingService } from '../loading/loading.service';
 import { MessageService } from '../messages/messages.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Course } from '../model/course';
+import { CoursesStore } from '../services/courses.store';
 import * as moment from 'moment';
 
 @Component({
@@ -14,7 +13,6 @@ import * as moment from 'moment';
     templateUrl: './course-dialog.component.html',
     styleUrls: ['./course-dialog.component.css'],
     providers: [
-        LoadingService,
         MessageService,
     ],
 })
@@ -26,9 +24,8 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
-        private coursesService: CoursesService,
-        private loadingService: LoadingService,
         private messageService: MessageService,
+        private coursesStore: CoursesStore,
         @Inject(MAT_DIALOG_DATA) course: Course,
     ) {
         this.course = course;
@@ -50,19 +47,10 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
     public save(): void {
         const changes = this.form.value;
-        const saveCourse$ = this.coursesService
+        this.coursesStore
             .saveCourse(this.course.id, changes)
-            .pipe(
-                catchError((err) => {
-                    console.log(err);
-                    const message = 'Could not save course';
-                    this.messageService.showErrors(message);
-                    return throwError(err)
-                })
-            );
-        this.loadingService.showLoaderUntilCompleted(saveCourse$).subscribe((res) => {
-            this.dialogRef.close(res);
-        });
+            .subscribe();
+        this.dialogRef.close(changes);
     }
 
     public close(): void {
