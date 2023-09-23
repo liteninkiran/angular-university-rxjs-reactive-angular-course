@@ -31,7 +31,26 @@ export class CoursesStore {
     }
 
     public saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {
-        return undefined;
+        const url = `/api/courses/${courseId}`;
+        const courses = this.subject.getValue();
+        const index = courses.findIndex(course => course.id == courseId);
+        const newCourses: Course[] = courses.slice(0);
+        const newCourse: Course = {
+            ...courses[index],
+            ...changes,
+        };
+        const errFunction = (err: any): Observable<any> => {
+            const message = 'Could not save course';
+            console.log(message, err);
+            this.messages.showErrors(message);
+            return throwError(err);
+        }
+        newCourses[index] = newCourse;
+        this.subject.next(newCourses);
+
+        return this.http
+            .put(url, changes)
+            .pipe(catchError(errFunction), shareReplay());
     }
 
     private loadAllCourses(): void {
