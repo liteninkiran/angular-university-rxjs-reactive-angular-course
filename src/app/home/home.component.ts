@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     }
 
     public reloadCourses(): void {
-        this.coursesStore.filterByCategory('BEGINNER');
-        this.coursesStore.filterByCategory('ADVANCED');
+        this.beginnerCourses$ = this.coursesStore.filterByCategory('BEGINNER');
+        this.advancedCourses$ = this.coursesStore.filterByCategory('ADVANCED');
     }
 }

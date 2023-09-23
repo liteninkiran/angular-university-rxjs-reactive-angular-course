@@ -9,7 +9,7 @@ import { MessageService } from '../messages/messages.service';
 @Injectable({
     providedIn: 'root'
 })
-export class CoursesStore {
+export class Courses2Store {
 
     private subject = new BehaviorSubject<Course[]>([]);
 
