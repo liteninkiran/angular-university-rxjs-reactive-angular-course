@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Course, sortCoursesBySeqNo } from '../model/course';
-import { CoursesService } from '../services/courses.service';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { LoadingService } from '../loading/loading.service';
-import { MessageService } from '../messages/messages.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Course } from '../model/course';
+import { Observable } from 'rxjs';
+import { CoursesStore } from '../services/courses.store';
 
 @Component({
     selector: 'home',
@@ -18,9 +14,7 @@ export class HomeComponent implements OnInit {
     public advancedCourses$: Observable<Course[]>;
 
     constructor(
-        private coursesService: CoursesService,
-        private loadingService: LoadingService,
-        private messageService: MessageService,
+        private coursesStore: CoursesStore,
     ) {
 
     }
@@ -30,22 +24,7 @@ export class HomeComponent implements OnInit {
     }
 
     public reloadCourses(): void {
-        const courses$: Observable<Course[]> = this.coursesService.loadAllCourses().pipe(
-            map((courses: Course[]) => courses.sort(sortCoursesBySeqNo)),
-            catchError((err: HttpErrorResponse) => {
-                const message = `Could not load courses (${ err.error.message })`;
-                this.messageService.showErrors(message);
-                return throwError(err);
-            })
-        );
-        const loadCourses$: Observable<Course[]> = this.loadingService.showLoaderUntilCompleted(courses$);
-        this.defineObservable(loadCourses$, 'BEGINNER', 'beginnerCourses$');
-        this.defineObservable(loadCourses$, 'ADVANCED', 'advancedCourses$');
-    }
-
-    private defineObservable(loadCourses$: Observable<Course[]>, category: string, varName: string): void {
-        this[varName] = loadCourses$.pipe(
-            map((courses: Course[]) => courses.filter((course: Course) => course.category === category))
-        );
+        this.coursesStore.filterByCategory('BEGINNER');
+        this.coursesStore.filterByCategory('ADVANCED');
     }
 }
