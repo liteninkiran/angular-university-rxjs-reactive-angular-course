@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Course } from '../model/course';
+import { Lesson } from '../model/lesson';
 
 // Only one instance of the service available throughout the whole application
 @Injectable({
@@ -16,7 +17,7 @@ export class CoursesService {
 
     public loadAllCourses(): Observable<Course[]> {
         return this.http
-                .get<IResponse>('/api/courses')
+                .get<ICourseResponse>('/api/courses')
                 .pipe(map(res => res.payload), shareReplay());
     }
 
@@ -25,8 +26,25 @@ export class CoursesService {
                 .put<Course>(`/api/courses/${courseId}`, changes)
                 .pipe(shareReplay());
     }
+
+    public searchLessons(search: string): Observable<Lesson[]> {
+        const url = '/api/lessons';
+        const options = {
+            params: {
+                filter: search,
+                pageSize: '100',
+            },
+        }
+        return this.http.get<ILessonResponse>('/api/lessons', options).pipe(
+            map(res => res.payload), shareReplay()
+        );
+    }
 }
 
-export interface IResponse {
+export interface ICourseResponse {
     payload: Course[];
+}
+
+export interface ILessonResponse {
+    payload: Lesson[];
 }

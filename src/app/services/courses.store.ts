@@ -5,7 +5,7 @@ import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../loading/loading.service';
 import { MessagesService } from '../messages/messages.service';
-import { IResponse } from './courses.service';
+import { ICourseResponse } from './courses.service';
 
 // Only one instance of the service available throughout the whole application
 @Injectable({
@@ -58,8 +58,8 @@ export class CoursesStore {
     }
 
     private loadAllCourses(): void {
-        const loadCourses$: Observable<Course[]> = this.http.get<IResponse>('/api/courses').pipe(
-            map((response: IResponse) => response.payload),
+        const loadCourses$: Observable<Course[]> = this.http.get<ICourseResponse>('/api/courses').pipe(
+            map((response: ICourseResponse) => response.payload),
             catchError(err => {
                 const message = 'Could not load courses';
                 this.messagesService.showErrors(message);
