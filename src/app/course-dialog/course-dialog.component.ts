@@ -1,16 +1,13 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
 
 import { Course } from '../model/course';
-import { CoursesService } from '../services/courses.service';
 import { LoadingService } from '../loading/loading.service';
 import { MessagesService } from '../messages/messages.service';
+import { CoursesStore } from '../services/courses.store';
 
 import * as moment from 'moment';
-import { Observable, throwError } from 'rxjs';
-import { CoursesStore } from '../services/courses.store';
 
 @Component({
     selector: 'course-dialog',
@@ -27,11 +24,10 @@ export class CourseDialogComponent implements AfterViewInit {
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
         private coursesStore: CoursesStore,
-        private messagesService: MessagesService,
         @Inject(MAT_DIALOG_DATA) course: Course,
     ) {
         this.course = course;
-        this.form = fb.group({
+        this.form = this.fb.group({
             description: [course.description, Validators.required],
             category: [course.category, Validators.required],
             releasedAt: [moment(), Validators.required],
