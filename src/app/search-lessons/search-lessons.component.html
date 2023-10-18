@@ -41,11 +41,13 @@
     </ng-container>
 
     <ng-template #detail>
-        <button mar-raised-button class="back-btn" (click)="onBackToSearch()">
-            <mat-icon>aroow_back_ios</mat-icon>
-            Back to Search
+        <button mat-raised-button class="back-btn" (click)="onBackToSearch()">
+            <mat-icon>arrow_back_ios</mat-icon>
+            Back to Search Results
         </button>
-        <lesson></lesson>
+
+        <lesson [lesson]="activeLesson"></lesson>
+
     </ng-template>
 
 </div>
