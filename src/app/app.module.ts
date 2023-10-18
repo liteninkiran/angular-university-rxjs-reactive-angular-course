@@ -10,7 +10,6 @@ import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
 import { CourseComponent } from './course/course.component';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
-import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
 import { HomeComponent } from './home/home.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { LoadingComponent } from './loading/loading.component';
@@ -19,8 +18,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { SearchLessonsComponent } from './search-lessons/search-lessons.component';
 
 import { SafeUrlPipe } from './common/safe-url.pipe';
+import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
 import { LoadingService } from './loading/loading.service';
-import { MessageService } from './messages/messages.service';
+import { MessagesService } from './messages/messages.service';
 
 @NgModule({
     declarations: [
@@ -28,15 +28,14 @@ import { MessageService } from './messages/messages.service';
         AppComponent,
         CourseComponent,
         CourseDialogComponent,
-        CoursesCardListComponent,
         HomeComponent,
         LessonComponent,
         LoadingComponent,
         LoginComponent,
         MessagesComponent,
         SearchLessonsComponent,
-
         SafeUrlPipe,
+        CoursesCardListComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -48,7 +47,7 @@ import { MessageService } from './messages/messages.service';
     ],
     providers: [
         LoadingService,
-        MessageService,
+        MessagesService,
     ],
     bootstrap: [
         AppComponent,

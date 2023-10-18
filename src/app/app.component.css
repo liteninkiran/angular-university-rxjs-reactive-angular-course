@@ -22,3 +22,11 @@ main {
     flex: 1 1 auto;
     width: 100%;
 }
+
+.navigation-list-link > * {
+    vertical-align: middle;
+}
+
+.navigation-list-link > mat-icon {
+    margin-right: 20px;
+}

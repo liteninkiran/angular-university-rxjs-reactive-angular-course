@@ -1,22 +1,36 @@
+<!-- Card -->
 <mat-card class="login-page">
-    <mat-card-title>Login</mat-card-title>
+
+    <!-- Card Title -->
+    <mat-card-title class="login-title">
+        Login
+    </mat-card-title>
+
+    <!-- Card Content -->
     <mat-card-content>
+
+        <!-- Login Form -->
         <form [formGroup]="form" class="login-form">
 
+            <!-- Email -->
             <mat-form-field>
-
-                <input matInput type="email" placeholder="Email" formControlName="email">
-
+                <label for="email">Email</label>
+                <input matInput type="email" placeholder="Email" formControlName="email" name="email">
             </mat-form-field>
 
+            <!-- Password -->
             <mat-form-field>
-
-                <input matInput type="password" placeholder="Password" formControlName="password">
-
+                <label for="password">Password</label>
+                <input matInput type="password" placeholder="Password" formControlName="password" name="password">
             </mat-form-field>
 
-            <button mat-raised-button color="primary" (click)="login()" [disabled]="!form.valid">Login</button>
+            <!-- Login Button -->
+            <button mat-raised-button color="primary" (click)="login()" [disabled]="!form.valid">
+                Login
+            </button>
 
         </form>
+
     </mat-card-content>
+
 </mat-card>

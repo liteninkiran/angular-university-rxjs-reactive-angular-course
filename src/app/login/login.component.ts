@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthStore } from '../services/auth.store';
 
 @Component({
     selector: 'login',
@@ -9,15 +10,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-    public form: FormGroup;
+    form: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private router: Router
+        private router: Router,
+        private authStore: AuthStore,
     ) {
         this.form = fb.group({
             email: ['test@angular-university.io', [Validators.required]],
-            password: ['test', [Validators.required]]
+            password: ['test', [Validators.required]],
         });
     }
 
@@ -27,5 +29,11 @@ export class LoginComponent implements OnInit {
 
     public login(): void {
         const val = this.form.value;
+        this.authStore
+            .login(val.email, val.password)
+            .subscribe(
+                usr => this.router.navigateByUrl('/courses'),
+                err => alert('Login Failed')
+            );
     }
 }

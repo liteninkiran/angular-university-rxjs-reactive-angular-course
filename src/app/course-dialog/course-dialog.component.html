@@ -1,8 +1,10 @@
-<h2 mat-dialog-title>{{ course.description }}</h2>
+<h2 mat-dialog-title>{{course.description}}</h2>
 
-<loading></loading>
-
+<!-- Messages -->
 <messages></messages>
+
+<!-- Loading Indicator -->
+<loading></loading>
 
 <mat-dialog-content [formGroup]="form">
 
@@ -34,17 +36,8 @@
 
 </mat-dialog-content>
 
-<!-- Actions ( Close / Save ) -->
+<!-- Save / Cancel -->
 <mat-dialog-actions>
-
-    <!-- Close -->
-    <button mat-raised-button (click)="close()">
-        Close
-    </button>
-
-    <!-- Save -->
-    <button mat-raised-button color="primary" #saveButton (click)="save()">
-        Save
-    </button>
-
+    <button mat-raised-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" #saveButton (click)="save()">Save</button>
 </mat-dialog-actions>

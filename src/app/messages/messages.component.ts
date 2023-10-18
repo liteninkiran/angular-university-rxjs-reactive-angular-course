@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MessagesService } from './messages.service';
 import { Observable } from 'rxjs';
-import { MessageService } from './messages.service';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -12,14 +12,16 @@ export class MessagesComponent implements OnInit {
 
     public showMessages = false;
     public errors$: Observable<string[]>;
-  
-    constructor(public messageService: MessageService) {
+
+    constructor(
+        public messagesService: MessagesService,
+    ) {
 
     }
 
     public ngOnInit(): void {
-        this.errors$ = this.messageService.errors$.pipe(
-            tap(() => this.showMessages = true)
+        this.errors$ = this.messagesService.errors$.pipe(
+            tap(() => this.showMessages = true),
         );
     }
 

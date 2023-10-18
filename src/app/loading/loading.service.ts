@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { concatMap, finalize, tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable, of } from "rxjs";
+import { concatMap, finalize, tap } from "rxjs/operators";
 
+// Multiple instances available (i.e. use providers)
 @Injectable()
 export class LoadingService {
 
@@ -14,20 +15,18 @@ export class LoadingService {
     }
 
     public showLoaderUntilCompleted<T>(obs$: Observable<T>): Observable<T> {
-        return of(null)
-            .pipe(
-                tap(() => this.loadingOn()),
-                concatMap(() => obs$),
-                finalize(() => this.loadingOff())
-            );
+        return of(null).pipe(
+            tap(() => this.loadingOn()),
+            concatMap(() => obs$),
+            finalize(() => this.loadingOff()),
+        );
     }
 
-    public loadingOn(): void {
+    private loadingOn(): void {
         this.loadingSubject.next(true);
-
     }
 
-    public loadingOff(): void {
+    private loadingOff(): void {
         this.loadingSubject.next(false);
     }
 }

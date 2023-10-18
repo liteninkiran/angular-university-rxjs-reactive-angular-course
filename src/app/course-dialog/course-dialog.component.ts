@@ -1,22 +1,24 @@
-import { OnInit, AfterViewInit, Component, Inject } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AfterViewInit, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MessageService } from '../messages/messages.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+
 import { Course } from '../model/course';
-import { CoursesStore } from '../services/courses.store';
+import { CoursesService } from '../services/courses.service';
+import { LoadingService } from '../loading/loading.service';
+import { MessagesService } from '../messages/messages.service';
+
 import * as moment from 'moment';
+import { Observable, throwError } from 'rxjs';
+import { CoursesStore } from '../services/courses.store';
 
 @Component({
     selector: 'course-dialog',
     templateUrl: './course-dialog.component.html',
     styleUrls: ['./course-dialog.component.css'],
-    providers: [
-        MessageService,
-    ],
+    providers: [LoadingService, MessagesService],
 })
-export class CourseDialogComponent implements OnInit, AfterViewInit {
+export class CourseDialogComponent implements AfterViewInit {
 
     public form: FormGroup;
     public course: Course;
@@ -24,8 +26,8 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
-        private messageService: MessageService,
         private coursesStore: CoursesStore,
+        private messagesService: MessagesService,
         @Inject(MAT_DIALOG_DATA) course: Course,
     ) {
         this.course = course;
@@ -33,12 +35,8 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
             description: [course.description, Validators.required],
             category: [course.category, Validators.required],
             releasedAt: [moment(), Validators.required],
-            longDescription: [course.longDescription, Validators.required]
+            longDescription: [course.longDescription, Validators.required],
         });
-    }
-
-    public ngOnInit(): void {
-
     }
 
     public ngAfterViewInit(): void {
@@ -47,9 +45,7 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
     public save(): void {
         const changes = this.form.value;
-        this.coursesStore
-            .saveCourse(this.course.id, changes)
-            .subscribe();
+        this.coursesStore.saveCourse(this.course.id, changes).subscribe();
         this.dialogRef.close(changes);
     }
 
