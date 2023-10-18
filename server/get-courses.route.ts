@@ -20,5 +20,6 @@ export function getCourseById(req: Request, res: Response) {
     const courseId = req.params['id'];
     const courses: any = Object.values(COURSES);
     const course = courses.find(course => course.id == courseId);
-    setTimeout(() => res.status(200).json(course), 3000);
+    const delay = Math.random() * (2000 - 300) + 300;
+    setTimeout(() => res.status(200).json(course), delay);
 }

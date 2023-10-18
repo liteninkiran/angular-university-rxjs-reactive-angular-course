@@ -4,7 +4,7 @@ import { Course } from '../model/course';
 import { Lesson } from '../model/lesson';
 import { Observable, combineLatest } from 'rxjs';
 import { CoursesService } from '../services/courses.service';
-import { map, tap } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'course',
@@ -24,12 +24,9 @@ export class CourseComponent implements OnInit {
 
     public ngOnInit(): void {
         const courseId: number = parseInt(this.route.snapshot.paramMap.get('courseId'));
-        const course$ = this.coursesService.loadCourseById(courseId);
-        const lessons$ = this.coursesService.loadAllCourseLessons(courseId);
-        this.data$ = combineLatest([course$, lessons$]).pipe(
-            map(([course, lessons]) => ({ course, lessons })),
-            tap(console.log),
-        );
+        const course$ = this.coursesService.loadCourseById(courseId).pipe(startWith(null));
+        const lessons$ = this.coursesService.loadAllCourseLessons(courseId).pipe(startWith([]));
+        this.data$ = combineLatest([course$, lessons$]).pipe(map(([course, lessons]) => ({ course, lessons })));
     }
 }
 

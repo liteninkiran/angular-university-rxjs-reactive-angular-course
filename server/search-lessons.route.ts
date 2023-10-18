@@ -1,14 +1,8 @@
-
-
-
 import {Request, Response} from 'express';
 import {LESSONS} from "./db-data";
 import {setTimeout} from "timers";
 
-
-
 export function searchLessons(req: Request, res: Response) {
-
     const queryParams = req.query as any;
 
     const courseId = queryParams.courseId,
@@ -35,12 +29,8 @@ export function searchLessons(req: Request, res: Response) {
     }
 
     const initialPos = pageNumber * pageSize;
-
     const lessonsPage = lessons.slice(initialPos, initialPos + pageSize);
+    const delay = Math.random() * (2000 - 300) + 300;
 
-    setTimeout(() => {
-        res.status(200).json({payload: lessonsPage});
-    }, 100);
-
-
+    setTimeout(() => res.status(200).json({payload: lessonsPage}), delay);
 }
