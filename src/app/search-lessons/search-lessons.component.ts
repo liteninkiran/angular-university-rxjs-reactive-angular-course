@@ -11,7 +11,7 @@ export class SearchLessonsComponent implements OnInit {
 
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
 
     }
 }
