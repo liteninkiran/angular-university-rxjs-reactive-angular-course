@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../model/course';
 import { Lesson } from '../model/lesson';
+import { Observable } from 'rxjs';
+import { CoursesService } from '../services/courses.service';
 
 @Component({
     selector: 'course',
@@ -10,15 +12,18 @@ import { Lesson } from '../model/lesson';
 })
 export class CourseComponent implements OnInit {
 
-    course: Course;
+    public course$: Observable<Course>;
+    public lessons$: Observable<Lesson[]>;
 
-    lessons: Lesson[];
-
-    constructor(private route: ActivatedRoute) {
+    constructor(
+        private route: ActivatedRoute,
+        private coursesService: CoursesService,
+    ) {
 
     }
 
-    ngOnInit() {
-
+    public ngOnInit(): void {
+        const courseId: number = parseInt(this.route.snapshot.paramMap.get('courseId'));
+        this.course$ = this.coursesService.loadCourseById(courseId);
     }
 }

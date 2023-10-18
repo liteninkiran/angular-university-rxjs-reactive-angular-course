@@ -17,7 +17,7 @@ export class CoursesService {
 
     public loadAllCourses(): Observable<Course[]> {
         return this.http
-                .get<ICourseResponse>('/api/courses')
+                .get<ICoursesResponse>('/api/courses')
                 .pipe(map(res => res.payload), shareReplay());
     }
 
@@ -39,9 +39,15 @@ export class CoursesService {
             map(res => res.payload), shareReplay()
         );
     }
+
+    public loadCourseById(courseId: number): Observable<Course> {
+        return this.http
+                .get<Course>(`/api/courses/${courseId}`)
+                .pipe(shareReplay());
+    }
 }
 
-export interface ICourseResponse {
+export interface ICoursesResponse {
     payload: Course[];
 }
 
