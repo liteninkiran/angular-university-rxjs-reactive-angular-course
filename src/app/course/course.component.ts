@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../model/course';
 import { Lesson } from '../model/lesson';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { CoursesService } from '../services/courses.service';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'course',
@@ -12,8 +13,7 @@ import { CoursesService } from '../services/courses.service';
 })
 export class CourseComponent implements OnInit {
 
-    public course$: Observable<Course>;
-    public lessons$: Observable<Lesson[]>;
+    public data$ : Observable<ICourseData>;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,7 +24,16 @@ export class CourseComponent implements OnInit {
 
     public ngOnInit(): void {
         const courseId: number = parseInt(this.route.snapshot.paramMap.get('courseId'));
-        this.course$ = this.coursesService.loadCourseById(courseId);
-        this.lessons$ = this.coursesService.loadAllCourseLessons(courseId);
+        const course$ = this.coursesService.loadCourseById(courseId);
+        const lessons$ = this.coursesService.loadAllCourseLessons(courseId);
+        this.data$ = combineLatest([course$, lessons$]).pipe(
+            map(([course, lessons]) => ({ course, lessons })),
+            tap(console.log),
+        );
     }
+}
+
+interface ICourseData {
+    course: Course;
+    lessons: Lesson[];
 }
